@@ -1,0 +1,94 @@
+
+
+runfile('/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis/main.py', wdir='/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis')
+#---------------------------------------------------------------------------------------
+
+### TOY DATA
+
+theta for Perceptron is 3.9264999999998995, 3.520599999999991
+theta_0 for Perceptron is -7.0
+
+theta for Average Perceptron is 3.8735113949998436, 3.8802419599999936
+theta_0 for Average Perceptron is -7.01295
+
+theta for Pegasos is 0.6895719966639845, 0.5714970011329141
+theta_0 for Pegasos is -1.2426141399854491
+#---------------------------------------------------------------------------------------
+
+### Accuracies for Reviews data for 3 algorithms
+
+Training accuracy for perceptron:   0.8157
+Validation accuracy for perceptron: 0.7160
+
+Training accuracy for average perceptron:   0.9728
+Validation accuracy for average perceptron: 0.7980
+
+Training accuracy for Pegasos:                     0.9143
+Validation accuracy for Pegasos:                   0.7900
+
+
+Training accuracy for LDA:                         0.9825
+Validation accuracy for LDA:                       0.6560
+
+Training accuracy for Logistic regression:         0.9910
+Validation accuracy for Logistic regression:       0.8000
+
+Training accuracy for Naive Bayes:                 0.8875
+Validation accuracy for Naive Bayes:               0.5680
+
+#---------------------------------------------------------------------------------------
+
+### Hyperparameter tuning
+
+perceptron valid: [(1, 0.758), (5, 0.72), (10, 0.716), (15, 0.778), (25, 0.794), (50, 0.79)]
+best = 0.7940, T=25.0000
+avg perceptron valid: [(1, 0.794), (5, 0.792), (10, 0.798), (15, 0.798), (25, 0.8), (50, 0.796)]
+best = 0.8000, T=25.0000
+
+Pegasos valid: tune T [(1, 0.786), (5, 0.78), (10, 0.79), (15, 0.802), (25, 0.806), (50, 0.8)]
+best = 0.8060, T=25.0000
+Pegasos valid: tune L [(0.001, 0.786), (0.01, 0.806), (0.1, 0.762), (1, 0.568), (10, 0.518)]
+best = 0.8060, L=0.0100
+
+#---------------------------------------------------------------------------------------
+
+Training accuracy for Pegasos:                     0.9185
+Test accuracy for Pegasos:                         0.8020
+
+#---------------------------------------------------------------------------------------
+
+Most Explanatory Word Features
+['delicious', 'great', '!', 'best', 'perfect', 'loves', 'wonderful', 'glad', 'love', 'quickly']
+
+#---------------------------------------------------------------------------------------
+
+
+time to create BOW dictionary (before hashing): 0.20646183699999998
+
+
+
+#---------------------------------------------------------------------------------------
+### LDA predictions for val_bow_features
+### pred1=clf1.predict(val_bow_features)
+
++++ [-1 -1 -1 -1 -1  1  1 -1  1 -1  1 -1  1 -1  1  1 -1  1  1  1  1 -1 -1  1
+  1 -1  1  1 -1  1  1  1 -1 -1  1 -1  1  1  1  1  1  1  1  1 -1 -1 -1 -1
+ -1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1 -1 -1 -1  1  1  1  1 -1  1  1  1
+  1  1 -1 -1 -1  1  1 -1  1  1 -1  1  1  1 -1 -1  1  1  1  1 -1 -1 -1  1
+  1  1 -1  1  1 -1  1 -1  1 -1  1  1 -1  1 -1 -1 -1 -1 -1  1 -1 -1  1  1
+ -1  1 -1 -1  1  1 -1 -1 -1 -1  1 -1  1 -1 -1 -1  1 -1 -1  1 -1  1 -1  1
+ -1  1  1 -1  1 -1  1 -1  1  1  1  1 -1 -1 -1  1  1 -1  1  1  1 -1  1 -1
+ -1  1 -1  1 -1  1  1  1  1  1 -1  1  1  1  1  1 -1  1  1 -1  1  1  1 -1
+ -1 -1  1  1 -1 -1  1 -1  1 -1  1  1 -1 -1 -1  1  1  1 -1  1  1 -1 -1 -1
+ -1 -1 -1 -1 -1  1  1  1 -1  1  1 -1  1 -1 -1 -1  1  1  1  1 -1  1  1 -1
+ -1 -1 -1 -1  1 -1  1 -1  1  1 -1 -1 -1 -1  1 -1  1  1 -1  1  1 -1 -1  1
+  1  1 -1 -1 -1  1  1  1  1 -1 -1  1 -1  1 -1  1 -1  1 -1 -1  1 -1  1 -1
+ -1 -1  1 -1 -1 -1  1  1 -1  1  1  1 -1 -1  1  1 -1 -1 -1  1 -1  1 -1  1
+ -1  1 -1  1  1  1 -1 -1  1 -1  1 -1 -1 -1  1 -1  1 -1 -1 -1  1 -1  1  1
+  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1  1 -1  1  1 -1  1 -1 -1 -1  1
+ -1 -1  1 -1 -1 -1 -1  1 -1  1 -1 -1  1 -1 -1  1  1 -1  1 -1 -1 -1 -1 -1
+ -1  1  1  1  1 -1 -1  1  1  1  1 -1 -1 -1  1  1  1  1  1 -1 -1  1  1 -1
+  1  1 -1  1 -1  1  1  1  1 -1 -1  1 -1 -1 -1  1  1  1  1  1 -1  1 -1 -1
+ -1 -1 -1  1 -1  1 -1  1 -1 -1  1  1  1  1  1  1  1  1 -1 -1  1 -1 -1 -1
+  1 -1  1 -1  1 -1  1 -1  1 -1  1 -1 -1 -1 -1  1 -1  1 -1 -1 -1 -1  1 -1
+  1  1 -1 -1  1 -1 -1 -1  1 -1  1 -1 -1  1  1  1 -1 -1  1  1]
