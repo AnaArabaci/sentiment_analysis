@@ -3,6 +3,19 @@
 runfile('/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis/main.py', wdir='/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis')
 #---------------------------------------------------------------------------------------
 
+Size of dictionary: 13234
+Size of dictionary: 13015
+
+time to create BOW dictionary: 0.276743953
+
+features [[2. 1. 1. 1. 1. 1. 2. 1. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 4. 0. 0. 0. 0. 1. 1. 1. 2.]
+ [0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 6. 0. 0. 0. 0. 0. 0. 2. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 1. 0. 0. 0. 0. 0. 2. 0.]]
+
+#---------------------------------------------------------------------------------------
+
 ### TOY DATA
 
 theta for Perceptron is 3.9264999999998995, 3.520599999999991

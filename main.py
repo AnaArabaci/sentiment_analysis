@@ -18,16 +18,25 @@ train_data = utils.load_data('reviews_train.tsv')
 val_data = utils.load_data('reviews_val.tsv')
 test_data = utils.load_data('reviews_test.tsv')
 
+#stopwords
+with open('stopwords.txt') as f:
+    stopwords = f.read()
+    #print("stopwords:", stopwords)
+
+
 train_texts, train_labels = zip(*((sample['text'], sample['sentiment']) for sample in train_data))
 val_texts, val_labels = zip(*((sample['text'], sample['sentiment']) for sample in val_data))
 test_texts, test_labels = zip(*((sample['text'], sample['sentiment']) for sample in test_data))
+
+
 
 #-------------------------------------------------------------------------------
 # Creating bag-of-words dictionary (timed)
 #-------------------------------------------------------------------------------
 start = timer() #timer
 
-dictionary = p1.bag_of_words(train_texts)
+dictionary = p1.bag_of_words(train_texts, stopwords)
+print("Size of dictionary:", len(dictionary))
 
 end = timer() #timer
 print("time to create BOW dictionary:", end - start) #timer
@@ -40,6 +49,8 @@ print("time to create BOW dictionary:", end - start) #timer
 train_bow_features = p1.extract_bow_feature_vectors(train_texts, dictionary)
 val_bow_features = p1.extract_bow_feature_vectors(val_texts, dictionary)
 test_bow_features = p1.extract_bow_feature_vectors(test_texts, dictionary)
+
+print("features", train_bow_features[:5,:15])
 
 #-------------------------------------------------------------------------------
 # Toy data - calculating thetas, plotting data & decision boundary (Problem 5)

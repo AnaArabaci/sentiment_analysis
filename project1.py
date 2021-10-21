@@ -356,7 +356,7 @@ def extract_words(input_string):
     return input_string.lower().split()
 
 
-def bag_of_words(texts):
+def bag_of_words(texts, stopwords): # stopwords
     """
     Inputs a list of string reviews
     Returns a dictionary of unique unigrams occurring over the input
@@ -369,7 +369,8 @@ def bag_of_words(texts):
         word_list = extract_words(text)
         for word in word_list:
             if word not in dictionary:
-                dictionary[word] = len(dictionary)
+                if word not in stopwords: # stopwords
+                    dictionary[word] = len(dictionary)
     return dictionary
 
 
@@ -390,7 +391,7 @@ def extract_bow_feature_vectors(reviews, dictionary):
         word_list = extract_words(text)
         for word in word_list:
             if word in dictionary:
-                feature_matrix[i, dictionary[word]] = 1
+                feature_matrix[i, dictionary[word]] += 1 #XXX word counts
     return feature_matrix
 
 
