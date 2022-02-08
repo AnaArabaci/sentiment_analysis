@@ -2,7 +2,7 @@ import project1 as p1
 import utils
 import numpy as np
 #import pandas as pd
-
+from memory_profiler import profile
 from timeit import default_timer as timer #timer
 
 # sklearn linear classifiers
@@ -13,6 +13,7 @@ from sklearn.naive_bayes import GaussianNB
 #-------------------------------------------------------------------------------
 # Data loading
 #-------------------------------------------------------------------------------
+
 
 train_data = utils.load_data('reviews_train.tsv')
 val_data = utils.load_data('reviews_val.tsv')
@@ -74,9 +75,9 @@ def plot_toy_results(algo_name, thetas):
     print('theta_0 for', algo_name, 'is', str(thetas[1]))
     utils.plot_toy_data(algo_name, toy_features, toy_labels, thetas)
 
-plot_toy_results('Perceptron', thetas_perceptron)
-plot_toy_results('Average Perceptron', thetas_avg_perceptron)
-plot_toy_results('Pegasos', thetas_pegasos)
+# plot_toy_results('Perceptron', thetas_perceptron)
+# plot_toy_results('Average Perceptron', thetas_avg_perceptron)
+# plot_toy_results('Pegasos', thetas_pegasos)
 
 #-------------------------------------------------------------------------------
 # Calculating train and validation accuracy using Amazon reviews data (Problem 7)
@@ -89,10 +90,15 @@ L = 0.01
 
 start = timer()
 
-pct_train_accuracy, pct_val_accuracy = \
-    p1.classifier_accuracy(p1.perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
-print("{:35} {:.4f}".format("Training accuracy for perceptron:", pct_train_accuracy))
-print("{:35} {:.4f}".format("Validation accuracy for perceptron:", pct_val_accuracy))
+@profile
+def my_func():
+    pct_train_accuracy, pct_val_accuracy = \
+        p1.classifier_accuracy(p1.perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
+    print("{:35} {:.4f}".format("Training accuracy for perceptron:", pct_train_accuracy))
+    print("{:35} {:.4f}".format("Validation accuracy for perceptron:", pct_val_accuracy))
+
+if __name__ == '__main__':
+    my_func()
 
 end = timer()
 print("time to run Perceptron:", end - start)
@@ -101,20 +107,31 @@ print("time to run Perceptron:", end - start)
 # Avg perceptron
 start = timer()
 
-avg_pct_train_accuracy, avg_pct_val_accuracy = \
-   p1.classifier_accuracy(p1.average_perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
-print("{:43} {:.4f}".format("Training accuracy for average perceptron:", avg_pct_train_accuracy))
-print("{:43} {:.4f}".format("Validation accuracy for average perceptron:", avg_pct_val_accuracy))
+@profile
+def my_func2():
+    avg_pct_train_accuracy, avg_pct_val_accuracy = \
+       p1.classifier_accuracy(p1.average_perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
+    print("{:43} {:.4f}".format("Training accuracy for average perceptron:", avg_pct_train_accuracy))
+    print("{:43} {:.4f}".format("Validation accuracy for average perceptron:", avg_pct_val_accuracy))
+
+if __name__ == '__main__':
+    my_func2()
 
 end = timer()
 print("time to run Avg perceptron:", end - start)
 
 # Pegasos
 start = timer()
-avg_peg_train_accuracy, avg_peg_val_accuracy = \
-   p1.classifier_accuracy(p1.pegasos, train_bow_features,val_bow_features,train_labels,val_labels,T=T,L=L)
-print("{:50} {:.4f}".format("Training accuracy for Pegasos:", avg_peg_train_accuracy))
-print("{:50} {:.4f}".format("Validation accuracy for Pegasos:", avg_peg_val_accuracy))
+
+@profile
+def my_func3():
+    avg_peg_train_accuracy, avg_peg_val_accuracy = \
+       p1.classifier_accuracy(p1.pegasos, train_bow_features,val_bow_features,train_labels,val_labels,T=T,L=L)
+    print("{:50} {:.4f}".format("Training accuracy for Pegasos:", avg_peg_train_accuracy))
+    print("{:50} {:.4f}".format("Validation accuracy for Pegasos:", avg_peg_val_accuracy))
+
+if __name__ == '__main__':
+    my_func3()
 
 end = timer()
 print("time to run Pegasos:", end - start)
@@ -122,18 +139,23 @@ print("time to run Pegasos:", end - start)
 # LDA
 start = timer()
 
-clf1 = LinearDiscriminantAnalysis()
-clf1.fit(train_bow_features, train_labels)
-parameters_LDA = clf1.get_params()
-print("!", parameters_LDA)
+@profile
+def my_func4():
+    clf1 = LinearDiscriminantAnalysis()
+    clf1.fit(train_bow_features, train_labels)
+    parameters_LDA = clf1.get_params()
+    print("!", parameters_LDA)
 
-pred1=clf1.predict(val_bow_features)
+    pred1=clf1.predict(val_bow_features)
 
-LDA_train_accuracy=clf1.score(train_bow_features, train_labels)
-LDA_val_accuracy=clf1.score(val_bow_features, val_labels)
+    LDA_train_accuracy=clf1.score(train_bow_features, train_labels)
+    LDA_val_accuracy=clf1.score(val_bow_features, val_labels)
 
-print("{:50} {:.4f}".format("Training accuracy for LDA:", LDA_train_accuracy))
-print("{:50} {:.4f}".format("Validation accuracy for LDA:", LDA_val_accuracy))
+    print("{:50} {:.4f}".format("Training accuracy for LDA:", LDA_train_accuracy))
+    print("{:50} {:.4f}".format("Validation accuracy for LDA:", LDA_val_accuracy))
+
+if __name__ == '__main__':
+    my_func4()
 
 end = timer()
 print("time to run LDA:", end - start)
@@ -142,17 +164,22 @@ print("time to run LDA:", end - start)
 # Logistic regression
 start = timer()
 
-clf2 = LogisticRegression(random_state=0).fit(train_bow_features, train_labels)
-parameters_LR = clf2.get_params()
-print("!!", parameters_LR)
+@profile
+def my_func5():
+    clf2 = LogisticRegression(random_state=0).fit(train_bow_features, train_labels)
+    parameters_LR = clf2.get_params()
+    print("!!", parameters_LR)
 
-pred2=clf2.predict(val_bow_features)
+    pred2=clf2.predict(val_bow_features)
 
-LR_train_accuracy=clf2.score(train_bow_features, train_labels)
-LR_val_accuracy=clf2.score(val_bow_features, val_labels)
+    LR_train_accuracy=clf2.score(train_bow_features, train_labels)
+    LR_val_accuracy=clf2.score(val_bow_features, val_labels)
 
-print("{:50} {:.4f}".format("Training accuracy for Logistic regression:", LR_train_accuracy))
-print("{:50} {:.4f}".format("Validation accuracy for Logistic regression:", LR_val_accuracy))
+    print("{:50} {:.4f}".format("Training accuracy for Logistic regression:", LR_train_accuracy))
+    print("{:50} {:.4f}".format("Validation accuracy for Logistic regression:", LR_val_accuracy))
+
+if __name__ == '__main__':
+    my_func5()
 
 end = timer()
 print("time to run Logistic regression:", end - start)
@@ -160,18 +187,23 @@ print("time to run Logistic regression:", end - start)
 # Naive Bayes
 start = timer()
 
-clf3 = GaussianNB()
-clf3.fit(train_bow_features, train_labels)
-parameters_NB= clf3.get_params()
-print("!!!", parameters_NB)
+@profile
+def my_func6():
+    clf3 = GaussianNB()
+    clf3.fit(train_bow_features, train_labels)
+    parameters_NB= clf3.get_params()
+    print("!!!", parameters_NB)
 
-pred3=clf3.predict(val_bow_features)
+    pred3=clf3.predict(val_bow_features)
 
-NB_train_accuracy=clf3.score(train_bow_features, train_labels)
-NB_val_accuracy=clf3.score(val_bow_features, val_labels)
+    NB_train_accuracy=clf3.score(train_bow_features, train_labels)
+    NB_val_accuracy=clf3.score(val_bow_features, val_labels)
 
-print("{:50} {:.4f}".format("Training accuracy for Naive Bayes:", NB_train_accuracy))
-print("{:50} {:.4f}".format("Validation accuracy for Naive Bayes:", NB_val_accuracy))
+    print("{:50} {:.4f}".format("Training accuracy for Naive Bayes:", NB_train_accuracy))
+    print("{:50} {:.4f}".format("Validation accuracy for Naive Bayes:", NB_val_accuracy))
+
+if __name__ == '__main__':
+    my_func6()
 
 end = timer()
 print("time to run Naive Bayes:", end - start)
@@ -205,10 +237,10 @@ peg_tune_results_L = utils.tune_pegasos_L(fix_T, Ls, *data)
 print('Pegasos valid: tune L', list(zip(Ls, peg_tune_results_L[1])))
 print('best = {:.4f}, L={:.4f}'.format(np.max(peg_tune_results_L[1]), Ls[np.argmax(peg_tune_results_L[1])]))
 
-utils.plot_tune_results('Perceptron', 'T', Ts, *pct_tune_results)
-utils.plot_tune_results('Avg Perceptron', 'T', Ts, *avg_pct_tune_results)
-utils.plot_tune_results('Pegasos', 'T', Ts, *peg_tune_results_T)
-utils.plot_tune_results('Pegasos', 'L', Ls, *peg_tune_results_L)
+# utils.plot_tune_results('Perceptron', 'T', Ts, *pct_tune_results)
+# utils.plot_tune_results('Avg Perceptron', 'T', Ts, *avg_pct_tune_results)
+# utils.plot_tune_results('Pegasos', 'T', Ts, *peg_tune_results_T)
+# utils.plot_tune_results('Pegasos', 'L', Ls, *peg_tune_results_L)
 
 #-------------------------------------------------------------------------------
 # Use the best method (perceptron, average perceptron or Pegasos) along with

@@ -355,7 +355,7 @@ def extract_words(input_string):
 
     return input_string.lower().split()
 
-
+# @profile
 def bag_of_words(texts, stopwords): # stopwords
     """
     Inputs a list of string reviews

@@ -3,8 +3,8 @@
 runfile('/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis/main.py', wdir='/Users/efimova/Documents/PhD/Courses/2021_ML/U1/sentiment_analysis')
 #---------------------------------------------------------------------------------------
 
-Size of dictionary: 13234
-Size of dictionary: 13015
+Size of dictionary   (w/stopwords): 13234
+Size of dictionary (w/o stopwords): 13015
 
 time to create BOW dictionary: 0.276743953
 
@@ -105,3 +105,129 @@ time to create BOW dictionary (before hashing): 0.20646183699999998
  -1 -1 -1  1 -1  1 -1  1 -1 -1  1  1  1  1  1  1  1  1 -1 -1  1 -1 -1 -1
   1 -1  1 -1  1 -1  1 -1  1 -1  1 -1 -1 -1 -1  1 -1  1 -1 -1 -1 -1  1 -1
   1  1 -1 -1  1 -1 -1 -1  1 -1  1 -1 -1  1  1  1 -1 -1  1  1]
+
+#---------------------------------------------------------------------------------------
+
+### MEMORY USAGE
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    93    289.1 MiB    289.1 MiB           1   @profile
+    94                                         def my_func():
+    95                                             pct_train_accuracy, pct_val_accuracy = \
+    96    584.4 MiB    295.3 MiB           1           p1.classifier_accuracy(p1.perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
+    97    584.4 MiB      0.0 MiB           1       print("{:35} {:.4f}".format("Training accuracy for perceptron:", pct_train_accuracy))
+    98    584.4 MiB      0.0 MiB           1       print("{:35} {:.4f}".format("Validation accuracy for perceptron:", pct_val_accuracy))
+
+
+time to run Perceptron: 1.6059490160000003
+Training accuracy for average perceptron:   0.8895
+Validation accuracy for average perceptron: 0.7640
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   110    584.4 MiB    584.4 MiB           1   @profile
+   111                                         def my_func2():
+   112                                             avg_pct_train_accuracy, avg_pct_val_accuracy = \
+   113    584.6 MiB      0.2 MiB           1          p1.classifier_accuracy(p1.average_perceptron, train_bow_features,val_bow_features,train_labels,val_labels,T=T)
+   114    584.6 MiB      0.0 MiB           1       print("{:43} {:.4f}".format("Training accuracy for average perceptron:", avg_pct_train_accuracy))
+   115    584.6 MiB      0.0 MiB           1       print("{:43} {:.4f}".format("Validation accuracy for average perceptron:", avg_pct_val_accuracy))
+
+
+time to run Avg perceptron: 2.122117843
+Training accuracy for Pegasos:                     0.8572
+Validation accuracy for Pegasos:                   0.7520
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   126    584.6 MiB    584.6 MiB           1   @profile
+   127                                         def my_func3():
+   128                                             avg_peg_train_accuracy, avg_peg_val_accuracy = \
+   129    584.2 MiB     -0.4 MiB           1          p1.classifier_accuracy(p1.pegasos, train_bow_features,val_bow_features,train_labels,val_labels,T=T,L=L)
+   130    584.2 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Training accuracy for Pegasos:", avg_peg_train_accuracy))
+   131    584.2 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Validation accuracy for Pegasos:", avg_peg_val_accuracy))
+
+
+time to run Pegasos: 2.967294218000001
+/opt/anaconda3/lib/python3.7/site-packages/sklearn/discriminant_analysis.py:388: UserWarning: Variables are collinear.
+  warnings.warn("Variables are collinear.")
+! {'n_components': None, 'priors': None, 'shrinkage': None, 'solver': 'svd', 'store_covariance': False, 'tol': 0.0001}
+Training accuracy for LDA:                         0.9880
+Validation accuracy for LDA:                       0.6140
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   142    584.1 MiB    584.1 MiB           1   @profile
+   143                                         def my_func4():
+   144    584.1 MiB      0.0 MiB           1       clf1 = LinearDiscriminantAnalysis()
+   145    655.0 MiB     70.9 MiB           1       clf1.fit(train_bow_features, train_labels)
+   146    655.0 MiB      0.0 MiB           1       parameters_LDA = clf1.get_params()
+   147    655.0 MiB      0.0 MiB           1       print("!", parameters_LDA)
+   148
+   149    658.6 MiB      3.6 MiB           1       pred1=clf1.predict(val_bow_features)
+   150
+   151    703.3 MiB     44.7 MiB           1       LDA_train_accuracy=clf1.score(train_bow_features, train_labels)
+   152    703.3 MiB      0.0 MiB           1       LDA_val_accuracy=clf1.score(val_bow_features, val_labels)
+   153
+   154    703.3 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Training accuracy for LDA:", LDA_train_accuracy))
+   155    703.3 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Validation accuracy for LDA:", LDA_val_accuracy))
+
+
+time to run LDA: 90.804698265
+
+/opt/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
+  FutureWarning)
+!! {'C': 1.0, 'class_weight': None, 'dual': False, 'fit_intercept': True, 'intercept_scaling': 1, 'l1_ratio': None, 'max_iter': 100, 'multi_class': 'warn', 'n_jobs': None, 'penalty': 'l2', 'random_state': 0, 'solver': 'warn', 'tol': 0.0001, 'verbose': 0, 'warm_start': False}
+Training accuracy for Logistic regression:         0.9930
+Validation accuracy for Logistic regression:       0.7860
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   167    733.2 MiB    733.2 MiB           1   @profile
+   168                                         def my_func5():
+   169    736.1 MiB      2.9 MiB           1       clf2 = LogisticRegression(random_state=0).fit(train_bow_features, train_labels)
+   170    736.1 MiB      0.0 MiB           1       parameters_LR = clf2.get_params()
+   171    736.1 MiB      0.0 MiB           1       print("!!", parameters_LR)
+   172
+   173    736.1 MiB      0.0 MiB           1       pred2=clf2.predict(val_bow_features)
+   174
+   175    736.1 MiB      0.0 MiB           1       LR_train_accuracy=clf2.score(train_bow_features, train_labels)
+   176    736.1 MiB      0.0 MiB           1       LR_val_accuracy=clf2.score(val_bow_features, val_labels)
+   177
+   178    736.1 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Training accuracy for Logistic regression:", LR_train_accuracy))
+   179    736.1 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Validation accuracy for Logistic regression:", LR_val_accuracy))
+
+
+time to run Logistic regression: 0.3256665159999983
+!!! {'priors': None, 'var_smoothing': 1e-09}
+Training accuracy for Naive Bayes:                 0.8922
+Validation accuracy for Naive Bayes:               0.5800
+Filename: main.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   190    735.9 MiB    735.9 MiB           1   @profile
+   191                                         def my_func6():
+   192    735.9 MiB      0.0 MiB           1       clf3 = GaussianNB()
+   193    735.9 MiB      0.0 MiB           1       clf3.fit(train_bow_features, train_labels)
+   194    735.9 MiB      0.0 MiB           1       parameters_NB= clf3.get_params()
+   195    735.9 MiB      0.0 MiB           1       print("!!!", parameters_NB)
+   196
+   197    835.3 MiB     99.4 MiB           1       pred3=clf3.predict(val_bow_features)
+   198
+   199    835.3 MiB      0.0 MiB           1       NB_train_accuracy=clf3.score(train_bow_features, train_labels)
+   200    835.3 MiB      0.0 MiB           1       NB_val_accuracy=clf3.score(val_bow_features, val_labels)
+   201
+   202    835.3 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Training accuracy for Naive Bayes:", NB_train_accuracy))
+   203    835.3 MiB      0.0 MiB           1       print("{:50} {:.4f}".format("Validation accuracy for Naive Bayes:", NB_val_accuracy))
+
+
+time to run Naive Bayes: 2.8119410810000005
+
+
+
